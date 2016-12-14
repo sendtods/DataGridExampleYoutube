@@ -1,0 +1,304 @@
+﻿<Window x:Class="DataGridExampleYoutube.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataGridExampleYoutube"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="708" Width="818">
+    <Grid>
+        <TabControl >
+            <TabItem x:Name="homeTab">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical" Width="100" Height="113.96">
+                        <Image Name="img_home" Height="85" Width="85" Source="Images/home.png" Margin="0,3,0,0" />
+                        <TextBlock Text="Home" Margin="2,5,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid ShowGridLines="false">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="68*"/>
+                        <ColumnDefinition Width="47*"/>
+                        <ColumnDefinition Width="115*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Welcome To Home Page." Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Column="1" Margin="55.711,0,260,0"/>
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="Auto" Width="Auto" Padding="5,5,5,5" >
+                        <TextBlock Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center">
+                        <Hyperlink NavigateUri="http://www.freepik.com" RequestNavigate="Hyperlink_RequestNavigate">Icons made by Freepik from</Hyperlink>
+                        <Hyperlink NavigateUri="http://www.flaticon.com" RequestNavigate="Hyperlink_RequestNavigate">www.flaticon.com is licensed by <LineBreak/></Hyperlink>
+                        <Hyperlink NavigateUri="http://creativecommons.org/licenses/by/3.0/" RequestNavigate="Hyperlink_RequestNavigate"> CC 3.0 BY</Hyperlink>
+                        </TextBlock>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="Auto" Width="Auto" Padding="5,5,5,5">
+                        <TextBlock Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Hyperlink NavigateUri="http://www.flaticon.com/authors/madebyoliver" RequestNavigate="Hyperlink_RequestNavigate">Icons made by Madebyoliver</Hyperlink>
+                    <Hyperlink NavigateUri="http://www.flaticon.com" RequestNavigate="Hyperlink_RequestNavigate">www.flaticon.com is licensed by <LineBreak/></Hyperlink>
+                    <Hyperlink NavigateUri="http://creativecommons.org/licenses/by/3.0/" RequestNavigate="Hyperlink_RequestNavigate"> CC 3.0 BY</Hyperlink>
+                        </TextBlock>
+                    </Border>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="databaseTab">
+                <TabItem.Header>
+                    <StackPanel Orientation="Vertical" Width="100" Height="113.96">
+                        <Image Name="img_database" Height="85" Width="85" Source="Images/database.png" Margin="0,3,0,0" />
+                        <TextBlock Text="Database" Margin="2,5,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabControl x:Name="maindatabaseTabCtrl" SelectionChanged="OnTabItemChanged">
+                    <TabItem x:Name="categorytableTab">
+                        <TabItem.Header>
+                            <Label Content="Category Table"/>
+                        </TabItem.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="You Can Add Edit Delete Elements of Category Table Here:" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+                            <DataGrid Grid.Row="1" 
+                              Grid.ColumnSpan="2" 
+                              HorizontalAlignment="Center" 
+                              x:Name="categoryDataGridatDatabase" Height="250" 
+                              Width="400"
+                              AutoGenerateColumns="False" SelectionChanged="categoryDataGridatDatabase_SelectionChanged"
+                              SelectedItem="{Binding txtbox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn x:Name="IdCategoryColumn" Binding="{Binding id}" Header="Id" Width="Auto"/>
+                                    <DataGridTextColumn x:Name="CategoryNameColumn" Binding="{Binding category_name}" Header="Category Name" Width="Auto"/>
+                                    <DataGridTextColumn x:Name="CategoryDescriptionColumn" Binding="{Binding category_description}" Header="Category Description" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button Content="Add" Grid.Column="0" Margin="5,0,5,5" Click="Button_Add_CategoryElement_Click"/>
+                                <Button Content="Edit" Grid.Column="1" Margin="5,0,5,5" Click="Button_Edit_CategoryElement_Click"/>
+                                <Button Content="Delete" Grid.Column="2" Margin="5,0,5,5" Click="Button_Delete_CategoryElement_Click"/>
+                            </Grid>
+                            <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
+                            <Grid  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" x:Name="AddCategoryElementInputBox" Visibility="Collapsed">
+                                <Grid Background="Black" Opacity="0.6"/>
+                                <Border
+                            MinWidth="250"
+                            Background="LightGray" 
+                            BorderBrush="Black" 
+                            BorderThickness="2" 
+                            CornerRadius="5,5,5,5" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+                                    <StackPanel>
+                                        <TextBlock Margin="5" Text="Input Form:" FontWeight="Bold"/>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Margin="5" Text="Enter Id:" Grid.Row="0" Grid.Column="0"/>
+                                            <TextBox x:Name="InputCategoryIdBox"  Margin="5" Width="200" Grid.Row="0" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Category Name:" Grid.Row="1" Grid.Column="0"/>
+                                            <TextBox x:Name="InputCategoryNameBox" Margin="5" Width="200" Grid.Row="1" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Category Description:" Grid.Row="2" Grid.Column="0"/>
+                                            <TextBox x:Name="InputCategoryDescriptionBox" Margin="5" Width="200" Grid.Row="2" Grid.Column="1"/>
+                                        </Grid>
+
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button x:Name="CategorySubmitButton" Margin="5" Content="Submit" Background="{x:Null}" Click="Button_Submit_Category"/>
+                                            <Button x:Name="CategoryCancelButton" Margin="5" Content="Cancel" Background="{x:Null}" Click="Button_Cancel_Category" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <!-- Edit/Update Form Started Here-->
+                            <Grid  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" x:Name="EditCategoryElementInputBox" Visibility="Collapsed">
+                                <Grid Background="Black" Opacity="0.6"/>
+                                <Border
+                            MinWidth="250"
+                            Background="LightGray" 
+                            BorderBrush="Black" 
+                            BorderThickness="2" 
+                            CornerRadius="5,5,5,5" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+                                    <StackPanel>
+                                        <TextBlock Margin="5" Text="Input Form:" FontWeight="Bold"/>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Margin="5" Text="Enter Id:" Grid.Row="0" Grid.Column="0"/>
+                                            <TextBox x:Name="InputEditCategoryIdBox"  Margin="5" Width="200" Grid.Row="0" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Category Name:" Grid.Row="1" Grid.Column="0"/>
+                                            <TextBox x:Name="InputEditCategoryNameBox" Margin="5" Width="200" Grid.Row="1" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Category Description:" Grid.Row="2" Grid.Column="0"/>
+                                            <TextBox x:Name="InputEditCategoryDescriptionBox" Margin="5" Width="200" Grid.Row="2" Grid.Column="1"/>
+                                        </Grid>
+
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button x:Name="EditCategoryUpdateButton" Margin="5" Content="Submit" Background="{x:Null}" Click="ButtonEdit_Update_Category"/>
+                                            <Button x:Name="EditCategoryCancelButton" Margin="5" Content="Cancel" Background="{x:Null}" Click="ButtonEdit_Cancel_Category" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="itemtableTab">
+                        <TabItem.Header>
+                            <Label Content="Items Table"/>
+                        </TabItem.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="You Can Add Edit Delete Elements of Items Table Here:" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+                            <DataGrid Grid.Row="1" 
+                              Grid.ColumnSpan="2" 
+                              HorizontalAlignment="Center" 
+                              x:Name="itemsDataGridatDatabase" Height="250" 
+                              Width="400"
+                              AutoGenerateColumns="False" SelectionChanged="itemsDataGridatDatabase_SelectionChanged"
+                              SelectedItem="{Binding txtbox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn x:Name="IdItemsColumn" Binding="{Binding id}" Header="Id" Width="Auto"/>
+                                    <DataGridTextColumn x:Name="ItemsNameColumn" Binding="{Binding item_name}" Header="Item Name" Width="Auto"/>
+                                    <DataGridTextColumn x:Name="ItemsQuantityColumn" Binding="{Binding quantity}" Header="Quantity" Width="Auto"/>
+                                    <DataGridTextColumn x:Name="ItemsProductIdColumn" Binding="{Binding product_id}" Header="Product Id" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Grid Grid.Row="2"  Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button Content="Add" Grid.Column="0" Margin="5,0,5,5" Click="Button_Add_ItemElement_Click"/>
+                                <Button Content="Edit" Grid.Column="1" Margin="5,0,5,5" Click="Button_Edit_ItemElement_Click"/>
+                                <Button Content="Delete" Grid.Column="2" Margin="5,0,5,5" Click="Button_Delete_ItemElement_Click"/>
+                            </Grid>
+                            <!-- It's important that this is in the end of the XAML as it needs to be on top of everything else! -->
+                            <Grid  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" x:Name="AddItemElementInputBox" Visibility="Collapsed">
+                                <Grid Background="Black" Opacity="0.6"/>
+                                <Border
+                            MinWidth="250"
+                            Background="LightGray" 
+                            BorderBrush="Black" 
+                            BorderThickness="2" 
+                            CornerRadius="5,5,5,5" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+                                    <StackPanel>
+                                        <TextBlock Margin="5" Text="Input Form:" FontWeight="Bold"/>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Margin="5" Text="Enter Id:" Grid.Row="0" Grid.Column="0"/>
+                                            <TextBox x:Name="InputItemIdBox"  Margin="5" Width="200" Grid.Row="0" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Item Name:" Grid.Row="1" Grid.Column="0"/>
+                                            <TextBox x:Name="InputItemNameBox" Margin="5" Width="200" Grid.Row="1" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Item Quantity:" Grid.Row="2" Grid.Column="0"/>
+                                            <TextBox x:Name="InputItemQuantityBox" Margin="5" Width="200" Grid.Row="2" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Item Product Id:" Grid.Row="3" Grid.Column="0"/>
+                                            <TextBox x:Name="InputItemProductIdBox" Margin="5" Width="200" Grid.Row="3" Grid.Column="1"/>
+                                        </Grid>
+
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button x:Name="ItemSubmitButton" Margin="5" Content="Submit" Background="{x:Null}" Click="Button_Submit_Item"/>
+                                            <Button x:Name="ItemCancelButton" Margin="5" Content="Cancel" Background="{x:Null}" Click="Button_Cancel_Item" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <!-- Edit/Update Form Started Here-->
+                            <Grid  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" x:Name="EditItemElementInputBox" Visibility="Collapsed">
+                                <Grid Background="Black" Opacity="0.6"/>
+                                <Border
+                            MinWidth="250"
+                            Background="LightGray" 
+                            BorderBrush="Black" 
+                            BorderThickness="2" 
+                            CornerRadius="5,5,5,5" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+                                    <StackPanel>
+                                        <TextBlock Margin="5" Text="Input Form:" FontWeight="Bold"/>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Margin="5" Text="Enter Id:" Grid.Row="0" Grid.Column="0"/>
+                                            <TextBox x:Name="InputEditItemIdBox"  Margin="5" Width="200" Grid.Row="0" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Item Name:" Grid.Row="1" Grid.Column="0"/>
+                                            <TextBox x:Name="InputEditItemNameBox" Margin="5" Width="200" Grid.Row="1" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Item Quantity:" Grid.Row="2" Grid.Column="0"/>
+                                            <TextBox x:Name="InputEditItemQuantityBox" Margin="5" Width="200" Grid.Row="2" Grid.Column="1"/>
+                                            <TextBlock Margin="5" Text="Enter Product Id:" Grid.Row="3" Grid.Column="0"/>
+                                            <TextBox x:Name="InputEditItemProductIdBox" Margin="5" Width="200" Grid.Row="3" Grid.Column="1"/>
+                                        </Grid>
+
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button x:Name="EditItemUpdateButton" Margin="5" Content="Submit" Background="{x:Null}" Click="ButtonEdit_Update_Item"/>
+                                            <Button x:Name="EditItemCancelButton" Margin="5" Content="Cancel" Background="{x:Null}" Click="ButtonEdit_Cancel_Item" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Grid>
+
+                    </TabItem>
+                </TabControl>
+
+            </TabItem>
+
+        </TabControl>
+
+
+    </Grid>
+</Window>
